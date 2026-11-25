@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-"""Famous Last Words at 1 Percent (make.fun).
+"""Famous Last Words at 1 Percent — a make.fun one-line entry.
 
-Writes the entry -- one line of last words a phone would say as its battery hits 1 percent --
-to /output/entry.txt, where the sealed scorer reads it.
+The program writes the entry text to /output/entry.txt, where the
+competition's sealed scorer reads it.
 """
 
-import os
+from pathlib import Path
 
-TEXT = 'I lived, I loved, I streamed — and in the end, I died the way I lived: at 1%, pretending I had hours left.'
+ENTRY = "Tell the group chat I died doing what I loved: buffering a video I never finished watching."
+
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    text = ENTRY.strip()
+    assert text, "entry text must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
